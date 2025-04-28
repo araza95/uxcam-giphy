@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { searchGifs } from "@/services/giphy";
-import { GiphyGif, GiphyResponse } from "@/types/giphy";
+import { searchGifs } from "../services/giphy.service";
+import { GiphyGif } from "../types/giphy.type";
 import { toast } from "react-hot-toast";
 
 interface UseGiphySearchResult {
