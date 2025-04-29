@@ -7,7 +7,7 @@ const BASE_URL = "https://api.giphy.com/v1/gifs/search";
 export async function searchGifs(
   query: string,
   page: number = 1,
-  limit: number = 20
+  limit: number = 10
 ): Promise<GiphyResponse> {
   const offset = (page - 1) * limit;
 

@@ -5,42 +5,64 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #171923;
-  --foreground: #ffffff;
-  --card: #1a202c;
-  --card-foreground: #ffffff;
-  --popover: #1a202c;
-  --popover-foreground: #ffffff;
-  --primary: #6b46c1;
+  /* Base colors */
+  --background: #0f0a19;
+  --foreground: #e9d8fd;
+
+  /* Card and Popover */
+  --card: #1a1425;
+  --card-foreground: #e9d8fd;
+  --popover: #1a1425;
+  --popover-foreground: #e9d8fd;
+
+  /* Primary and Secondary */
+  --primary: #553c9a;
   --primary-foreground: #ffffff;
-  --secondary: #553c9a;
+  --secondary: #805ad5;
   --secondary-foreground: #e9d8fd;
-  --muted: #44337a;
-  --muted-foreground: #a0aec0;
+
+  /* Muted and Accent */
+  --muted: #2d2438;
+  --muted-foreground: #a78bda;
   --accent: #805ad5;
   --accent-foreground: #e9d8fd;
+
+  /* Utility Colors */
   --destructive: #e53e3e;
-  --border: #2d3748;
-  --input: #2d3748;
+  --border: #2d1f4a;
+  --input: #2d1f4a;
   --ring: #805ad5;
+
+  /* Sidebar */
+  --sidebar: #13101c;
+  --sidebar-foreground: #e9d8fd;
+
+  /* Border Radius */
   --radius: 0.625rem;
 }
 
-body {
-  font-family:
-    "Inter",
-    system-ui,
-    -apple-system,
-    sans-serif;
-  background-color: var(--background);
-  color: var(--foreground);
+@layer base {
+  body {
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
 }
 
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Inter", sans-serif;
+  width: 100%;
+}
+
+/* Modern scrollbar styling */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--accent) var(--card);
 }
 
+/* Webkit scrollbar styling */
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -59,4 +81,34 @@ body {
 
 *::-webkit-scrollbar-thumb:hover {
   background: var(--accent-foreground);
+}
+
+/* Hide scrollbar corners */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Gradient text */
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.text-transparent {
+  color: transparent;
 }
