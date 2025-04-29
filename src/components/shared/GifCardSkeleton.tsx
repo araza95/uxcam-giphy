@@ -1,4 +1,3 @@
-// components/GifCardSkeleton.tsx
 export function GifCardSkeleton() {
   return (
     <div className="w-full aspect-square rounded-lg overflow-hidden bg-card border border-border animate-pulse relative">

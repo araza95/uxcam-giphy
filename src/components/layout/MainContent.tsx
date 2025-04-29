@@ -31,9 +31,9 @@ export function MainContent({ error, loading, gifs, query }: MainContentProps) {
             <img
               src="/cartoon-character.png"
               alt="Welcome cartoon"
-              className="w-full max-w-[650px] h-auto px-4 md:px-0 animate-[bounce_3s_ease-in-out_infinite] translate-y-12"
+              className="w-full max-w-[650px] h-auto px-4 md:px-0 hover:scale-110 transition-transform duration-300 ease-in-out translate-y-12"
             />
-            <p className="text-base md:text-4xl font-medium text-center px-4 pb-2 mt-4">
+            <p className="text-base md:text-4xl font-medium text-center px-4 pb-2 mt-4 z-10">
               Start exploring GIFs!
             </p>
             <p className="text-md md:text-base text-muted-foreground text-center px-4">

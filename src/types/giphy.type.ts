@@ -27,12 +27,3 @@ export interface GiphyResponse {
     response_id: string;
   };
 }
-
-
-export interface SearchParams {
-  q: string;
-  page: string;
-  limit: string;
-}
-
-export type SearchParamsKeys = keyof SearchParams;

@@ -1,14 +1,12 @@
-// components/GifCard.tsx
 import { GiphyGif } from "../../types/giphy.type";
 
 interface GifCardProps {
   gif: GiphyGif;
 }
 
-// Add loading="lazy" and srcset for better image loading
 export function GifCard({ gif }: GifCardProps) {
   return (
-    <div 
+    <div
       role="article"
       aria-label={gif.title || "Untitled GIF"}
       tabIndex={0}

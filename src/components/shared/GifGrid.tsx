@@ -1,7 +1,6 @@
-// components/GifGrid.tsx
+import { GifCardSkeleton } from "./GifCardSkeleton";
 import { GiphyGif } from "../../types/giphy.type";
 import { GifCard } from "./GifCard";
-import { GifCardSkeleton } from "./GifCardSkeleton";
 
 interface GifGridProps {
   gifs: GiphyGif[];
