@@ -53,6 +53,8 @@ export function SearchInput() {
       </div>
       {/* Input field */}
       <Input
+        role="search"
+        aria-label="Search for GIFs"
         ref={inputRef}
         placeholder="Search for GIFs..."
         value={value}
@@ -64,9 +66,10 @@ export function SearchInput() {
         <button
           type="button"
           onClick={clearSearch}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent transition"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent transition cursor-pointer"
           tabIndex={-1}
           aria-label="Clear search"
+          title="Clear search"
         >
           <X size={18} />
         </button>
