@@ -1,6 +1,7 @@
 import { GiphyResponse } from "../types/giphy.type";
 
-const API_KEY = process.env.GIPHY_API_KEY;
+// const API_KEY = process.env.GIPHY_API_KEY;
+const API_KEY = "C1vp4KblWylpNliTYW7Q7OHnEPlQWeRO";
 const BASE_URL = "https://api.giphy.com/v1/gifs/search";
 
 export async function searchGifs(
