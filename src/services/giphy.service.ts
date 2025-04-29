@@ -1,7 +1,5 @@
 import { GiphyResponse } from "../types/giphy.type";
 
-// const API_KEY = process.env.GIPHY_API_KEY;
-const API_KEY = "C1vp4KblWylpNliTYW7Q7OHnEPlQWeRO";
 const BASE_URL = "https://api.giphy.com/v1/gifs/search";
 
 export async function searchGifs(
@@ -13,11 +11,11 @@ export async function searchGifs(
 
   try {
     const response = await fetch(
-      `${BASE_URL}?api_key=${API_KEY}&q=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}`
+      `${BASE_URL}?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${query}&limit=${limit}&offset=${offset}&rating=g&lang=en`
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Failed to fetch GIFs: ${response.statusText}`);
     }
 
     const data = await response.json();

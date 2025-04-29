@@ -1,5 +1,6 @@
 // components/shared/SearchInput.jsx
 import { Search, X } from "lucide-react";
+import { useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDebounce } from "../../hooks/useDebounce";
 import { Input } from "../ui/input";
@@ -10,9 +11,15 @@ export function SearchInput() {
     setSearchParams({ q: value as string, page: "1" });
   }, 300);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const clearSearch = () => {
     setSearchParams({ q: "" });
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
+
   return (
     <div className="relative max-w-xl">
       <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -26,6 +33,7 @@ export function SearchInput() {
         icon={<X className="h-5 w-5 text-muted-foreground" size={18} />}
         iconposition="right"
         onClickIcon={clearSearch}
+        ref={inputRef}
       />
     </div>
   );

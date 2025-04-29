@@ -57,7 +57,7 @@ function App() {
                   <img
                     src="/cartoon-character.png"
                     alt="Welcome cartoon"
-                    className="w-full max-w-[650px] h-auto px-4 md:px-0"
+                    className="w-full max-w-[650px] h-auto px-4 md:px-0 animate-[bounce_3s_ease-in-out_infinite] translate-y-1"
                   />
                   <p className="text-base md:text-lg font-medium text-center px-4 mt-4">
                     Start exploring GIFs!
