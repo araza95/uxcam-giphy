@@ -8,7 +8,7 @@ interface MainContentProps {
   query: string;
 }
 
-export function MainContent({ error, loading, gifs, query }: MainContentProps) {
+function MainContent({ error, loading, gifs, query }: MainContentProps) {
   if (error) {
     return (
       <div className="text-destructive text-center p-4 rounded-md bg-card/50 max-w-xl mx-auto">
@@ -51,3 +51,5 @@ export function MainContent({ error, loading, gifs, query }: MainContentProps) {
     </section>
   );
 }
+
+export default MainContent;

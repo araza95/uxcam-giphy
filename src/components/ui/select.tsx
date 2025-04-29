@@ -25,7 +25,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         >
           {options.map((option) => (
             <option
-              className="bg-card text-foreground py-1"
+              className="bg-[#0f0a19] py-2 text-foreground cursor-pointer"
               key={option.value}
               value={option.value}
             >

@@ -1,9 +1,12 @@
+import { lazy, Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 import { Header } from "./components/layout/Header";
-import { MainContent } from "./components/layout/MainContent";
-import { PaginationBar } from "./components/layout/PaginationBar";
-import { useGiphySearch } from "./hooks/useGiphySearch";
+import { Spinner } from "./components/shared/Spinner";
 import { useSearchParamsState } from "./hooks/useSearchParamsState";
+import { useGiphySearch } from "./hooks/useGiphySearch";
+
+const MainContent = lazy(() => import("./components/layout/MainContent"));
+const PaginationBar = lazy(() => import("./components/layout/PaginationBar"));
 
 function App() {
   const { getParam } = useSearchParamsState();
@@ -21,19 +24,21 @@ function App() {
     <div className="min-w-screen flex flex-col h-screen bg-background text-foreground overflow-hidden">
       <Toaster position="top-right" />
       <Header query={query} />
+      
+      <Suspense fallback={<div className="flex-1 grid place-items-center"><Spinner size="lg" /></div>}>
+        <main className="flex-1 overflow-hidden flex flex-col">
+          <MainContent
+            error={error}
+            loading={loading}
+            gifs={gifs}
+            query={query}
+          />
 
-      <main className="flex-1 overflow-hidden flex flex-col">
-        <MainContent
-          error={error}
-          loading={loading}
-          gifs={gifs}
-          query={query}
-        />
-
-        {totalPages > 0 && (
-          <PaginationBar currentPage={page} totalPages={totalPages} />
-        )}
-      </main>
+          {totalPages > 0 && (
+            <PaginationBar currentPage={page} totalPages={totalPages} />
+          )}
+        </main>
+      </Suspense>
     </div>
   );
 }
