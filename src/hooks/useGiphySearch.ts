@@ -1,6 +1,6 @@
 // hooks/useGiphySearch.ts
 import { useState, useEffect } from "react";
-import { searchGifs, abortAllRequests } from "../services/giphy.service";
+import { searchGifs } from "../services/giphy.service";
 import { GiphyGif } from "../types/giphy.type";
 import { toast } from "react-hot-toast";
 
@@ -73,12 +73,6 @@ export function useGiphySearch(
     };
 
     fetchGifs();
-
-    // Cleanup function to abort any pending requests when component unmounts
-    // or when query/page/limit changes
-    return () => {
-      abortAllRequests();
-    };
   }, [query, page, limit]);
 
   return result;

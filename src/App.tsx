@@ -1,16 +1,21 @@
-import { useSearchParams } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { GifGrid } from "./components/shared/GifGrid";
+import { Pagination } from "./components/shared/Pagination";
 import { SearchInput } from "./components/shared/SearchInput";
 import { useGiphySearch } from "./hooks/useGiphySearch";
-import { Toaster } from "react-hot-toast";
-import { Pagination } from "./components/shared/Pagination";
-import { GifGrid } from "./components/shared/GifGrid";
+import { useSearchParamsState } from "./hooks/useSearchParamsState";
 
 function App() {
-  const [searchParams] = useSearchParams();
-  const query = searchParams.get("q") || "";
-  const page = parseInt(searchParams.get("page") || "1");
+  const { getParam } = useSearchParamsState();
+  const query = getParam("q") || "";
+  const page = parseInt(getParam("page") || "1");
+  const limit = parseInt(getParam("limit") || "20");
 
-  const { gifs, loading, error, totalPages } = useGiphySearch(query, page);
+  const { gifs, loading, error, totalPages } = useGiphySearch(
+    query,
+    page,
+    limit
+  );
 
   return (
     <div className="min-w-screen flex flex-col h-screen bg-background text-foreground overflow-hidden">
@@ -57,12 +62,12 @@ function App() {
                   <img
                     src="/cartoon-character.png"
                     alt="Welcome cartoon"
-                    className="w-full max-w-[650px] h-auto px-4 md:px-0 animate-[bounce_3s_ease-in-out_infinite] translate-y-1"
+                    className="w-full max-w-[650px] h-auto px-4 md:px-0 animate-[bounce_3s_ease-in-out_infinite] translate-y-0.5"
                   />
-                  <p className="text-base md:text-lg font-medium text-center px-4 mt-4">
+                  <p className="text-base md:text-4xl font-medium text-center px-4 pb-2 mt-4">
                     Start exploring GIFs!
                   </p>
-                  <p className="text-sm md:text-base text-muted-foreground text-center px-4">
+                  <p className="text-md md:text-base text-muted-foreground text-center px-4">
                     Try searching for something fun
                   </p>
                 </div>

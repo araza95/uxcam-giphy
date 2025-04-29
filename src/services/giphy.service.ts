@@ -1,70 +1,48 @@
 // services/giphy.service.ts
 import { GiphyResponse } from "../types/giphy.type";
 
-const BASE_URL = "https://api.giphy.com/v1/gifs/search";
+const cache = new Map<string, {
+  data: GiphyResponse;
+  timestamp: number;
+}>();
 
-// Create a map to store active request controllers
-const activeRequests = new Map<string, AbortController>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export async function searchGifs(
   query: string,
   page: number = 1,
-  limit: number = 10
+  limit: number = 20
 ): Promise<GiphyResponse> {
-  const offset = (page - 1) * limit;
-
-  // Create a unique request identifier
   const requestId = `${query}-${page}-${limit}`;
-
-  // If there's an existing request with the same ID, abort it
-  if (activeRequests.has(requestId)) {
-    activeRequests.get(requestId)?.abort();
-    activeRequests.delete(requestId);
+  
+  // Check cache
+  const cached = cache.get(requestId);
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data;
   }
 
-  // Create a new AbortController for this request
-  const controller = new AbortController();
-  activeRequests.set(requestId, controller);
-
+  const offset = (page - 1) * limit;
+  
   try {
     const response = await fetch(
-      `${BASE_URL}?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}&rating=g&lang=en`,
-      {
-        signal: controller.signal,
-      }
+      `https://api.giphy.com/v1/gifs/search?api_key=${import.meta.env.VITE_GIPHY_API_KEY}&q=${encodeURIComponent(query)}&limit=${limit}&offset=${offset}&rating=g&lang=en`
     );
 
-    // Remove this request from active requests once completed
-    activeRequests.delete(requestId);
-
     if (!response.ok) {
-      throw new Error(`Failed to fetch GIFs: ${response.statusText}`);
+      throw new Error("Failed to fetch GIFs");
     }
 
     const data = await response.json();
+
+    // Cache the response
+    cache.set(requestId, {
+      data,
+      timestamp: Date.now()
+    });
+
     return data;
   } catch (error) {
-    // Don't throw errors for aborted requests
-    if (error instanceof DOMException && error.name === "AbortError") {
-      console.log("Request was aborted", requestId);
-      return {
-        data: [],
-        pagination: { total_count: 0, count: 0, offset: 0 },
-        meta: { status: 200, msg: "OK", response_id: "" },
-      };
-    }
-
-    // For other errors, throw as usual
-    throw new Error(
-      error instanceof Error ? error.message : "Failed to fetch GIFs"
-    );
+    console.error("Error fetching GIFs:", error);
+    throw error;
   }
-}
-
-// Optional: Function to abort all active requests (useful for cleanup)
-export function abortAllRequests() {
-  activeRequests.forEach((controller) => {
-    controller.abort();
-  });
-  activeRequests.clear();
 }
